@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  Hello world
-  <script src="script.js"></script>
+    <h1>Object Detection</h1>
+    <input type="file" id="file-input" accept="image/*">
+    <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <script src="script.js"></script>
 </body>
-
 </html>
