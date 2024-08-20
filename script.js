@@ -1,15 +1,28 @@
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+const instructions = document.getElementById('instructions');
 
-// Set up video stream
-navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
+// Function to set up video stream and handle permissions
+async function setupCamera() {
+    try {
+        // Prompt user for camera access
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         video.srcObject = stream;
-    })
-    .catch(err => {
+
+        // Update canvas size to match video size
+        video.onloadedmetadata = () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            // Hide instructions once the camera is active
+            instructions.classList.add('hidden');
+        };
+    } catch (err) {
+        // Handle the error if user denies camera access or other issues occur
         console.error("Error accessing video stream: ", err);
-    });
+        instructions.textContent = "Camera access is required for this application to function. Please allow camera access.";
+    }
+}
 
 // Load COCO-SSD model
 let model;
@@ -62,6 +75,10 @@ async function detectObjects() {
 }
 
 // Initialize
-loadModel().then(() => {
+async function initialize() {
+    await loadModel();
+    await setupCamera();
     detectObjects();
-});
+}
+
+initialize();
